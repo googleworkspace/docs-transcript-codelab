@@ -103,7 +103,7 @@ public class CreateTranscript {
    // Calls helper functions.
    String docId = createDocument(service);
    List<Request> toInsert = getTranscript();
-   insertText(service, toInsert, docId);
+   insertText(service, docId, toInsert);
  }
 
  /**
@@ -167,7 +167,7 @@ public class CreateTranscript {
   * @param {Object} toInsert List of requests to be inserted into the Doc.
   * @param {String} docID Google Doc ID of the Doc you'll be writing to.
   */
- private static void insertText(Docs service, List<Request> toInsert, String docId) throws IOException {
+ private static void insertText(Docs service, String docId, List<Request> toInsert) throws IOException {
    BatchUpdateDocumentRequest body = new BatchUpdateDocumentRequest();
    service.documents().batchUpdate(docId, body.setRequests(toInsert)).execute();
  }
