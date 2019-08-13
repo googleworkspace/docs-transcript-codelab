@@ -51,15 +51,15 @@ public class CreateTranscript {
  private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
  // Specify audio file name below.
- private static final String AUDIO_FILE_PATH = "audiofile.wav";
+ private static final String AUDIO_FILENAME = "audiofile.wav";
  private static final String TOKENS_DIRECTORY_PATH = "tokens";
  private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
  private static final String APPLICATION_NAME = "CreateTranscript";
  private static final List<String> SCOPES = Collections.singletonList(DocsScopes.DOCUMENTS);
 
  public static void main(String args[]) throws IOException, GeneralSecurityException {
-   final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-   Docs service = new Docs.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+   final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+   Docs service = new Docs.Builder(httpTransport, JSON_FACTORY, getCredentials(httpTransport))
        .setApplicationName(APPLICATION_NAME)
        .build();
 
@@ -69,11 +69,11 @@ public class CreateTranscript {
  /**
   * Creates an authorized Credential object.
   *
-  * @param HTTP_TRANSPORT The network HTTP Transport.
+  * @param httpTransport The network HTTP Transport.
   * @return An authorized Credential object.
   * @throws IOException If the credentials.json file cannot be found.
   */
- static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
+ static Credential getCredentials(final NetHttpTransport httpTransport) throws IOException {
    InputStream in = CreateTranscript.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
    if (in == null) {
      throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
@@ -84,7 +84,7 @@ public class CreateTranscript {
 
    // Build flow and trigger user authorization request.
    GoogleAuthorizationCodeFlow flow =
-       new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+       new GoogleAuthorizationCodeFlow.Builder(httpTransport, JSON_FACTORY, clientSecrets, SCOPES)
            .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
            .setAccessType("offline")
            .build();
@@ -113,7 +113,7 @@ public class CreateTranscript {
   * @return {String} Returns the Document ID of the newly created Doc.
   */
  private static String createDocument(Docs service) throws IOException {
-   Document doc = new Document().setTitle("Transcript for " + AUDIO_FILE_PATH);
+   Document doc = new Document().setTitle("Transcript for " + AUDIO_FILENAME);
    doc = service.documents().create(doc).execute();
    String documentId = doc.getDocumentId();
    return documentId;
@@ -126,7 +126,7 @@ public class CreateTranscript {
   */
  private static List<Request> getTranscript() throws IOException {
    SpeechClient speech = SpeechClient.create();
-   Path path = Paths.get(AUDIO_FILE_PATH);
+   Path path = Paths.get(AUDIO_FILENAME);
    byte[] data = Files.readAllBytes(path);
    ByteString audioBytes = ByteString.copyFrom(data);
 
