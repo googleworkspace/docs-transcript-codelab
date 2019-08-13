@@ -94,13 +94,11 @@ public class CreateTranscript {
  }
 
  /**
-  * Calls helper functions to create Doc, get audio file's transcript, and insert transcript into
-  * created Doc.
+  * Creates a Google Doc with the text transcription of an audio file.
   *
   * @param {Docs} service Docs authorization service to be able to use the Docs API.
   */
  private static void createTranscript(Docs service) throws IOException {
-   // Calls helper functions.
    String docId = createDocument(service);
    List<Request> toInsert = getTranscript();
    insertText(service, docId, toInsert);

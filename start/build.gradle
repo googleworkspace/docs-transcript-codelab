@@ -17,7 +17,7 @@ dependencies {
 
 }
 
-mainClassName = 'SpeechToDocs'
+mainClassName = 'CreateTranscript'
 
 run {
 	standardInput = System.in
