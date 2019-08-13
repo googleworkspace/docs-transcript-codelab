@@ -51,7 +51,7 @@ public class CreateTranscript {
  private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
  // Specify audio file name below.
- private static final String AUDIO_FILE_PATH = "audiofile.wav";
+ private static final String AUDIO_FILENAME = "audiofile.wav";
  private static final String TOKENS_DIRECTORY_PATH = "tokens";
  private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
  private static final String APPLICATION_NAME = "CreateTranscript";
@@ -113,7 +113,7 @@ public class CreateTranscript {
   * @return {String} Returns the Document ID of the newly created Doc.
   */
  private static String createDocument(Docs service) throws IOException {
-   Document doc = new Document().setTitle("Transcript for " + AUDIO_FILE_PATH);
+   Document doc = new Document().setTitle("Transcript for " + AUDIO_FILENAME);
    doc = service.documents().create(doc).execute();
    String documentId = doc.getDocumentId();
    return documentId;
@@ -126,7 +126,7 @@ public class CreateTranscript {
   */
  private static List<Request> getTranscript() throws IOException {
    SpeechClient speech = SpeechClient.create();
-   Path path = Paths.get(AUDIO_FILE_PATH);
+   Path path = Paths.get(AUDIO_FILENAME);
    byte[] data = Files.readAllBytes(path);
    ByteString audioBytes = ByteString.copyFrom(data);
 
