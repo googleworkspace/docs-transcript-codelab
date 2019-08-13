@@ -69,9 +69,9 @@ public class CreateTranscript {
  /**
   * Creates an authorized Credential object.
   *
-  * @param httpTransport The network HTTP Transport.
+  * @param {NetHttpTransport} httpTransport The network HTTP Transport.
   * @return An authorized Credential object.
-  * @throws IOException If the credentials.json file cannot be found.
+  * @throws {IOException} If the credentials.json file cannot be found.
   */
  static Credential getCredentials(final NetHttpTransport httpTransport) throws IOException {
    InputStream in = CreateTranscript.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
@@ -97,7 +97,7 @@ public class CreateTranscript {
   * Calls helper functions to create Doc, get audio file's transcript, and insert transcript into
   * created Doc.
   *
-  * @param {Object} service Docs authorization service to be able to use the Docs API.
+  * @param {Docs} service Docs authorization service to be able to use the Docs API.
   */
  private static void createTranscript(Docs service) throws IOException {
    // Calls helper functions.
@@ -109,7 +109,7 @@ public class CreateTranscript {
  /**
   * Creates a new Google Document. Once the document is created, returns its Document ID.
   *
-  * @param {Object} service Docs authorized service to be able to create a Doc.
+  * @param {Docs} service Docs authorized service to be able to create a Doc.
   * @return {String} Returns the Document ID of the newly created Doc.
   */
  private static String createDocument(Docs service) throws IOException {
@@ -122,7 +122,7 @@ public class CreateTranscript {
  /**
   * Obtains the transcript of an audio file by calling the Google Speech-to-Text API.
   *
-  * @return {Object} A list of requests of the audio file's transcript.
+  * @return {List<Request>} A list of requests of the audio file's transcript.
   */
  private static List<Request> getTranscript() throws IOException {
    SpeechClient speech = SpeechClient.create();
@@ -163,13 +163,13 @@ public class CreateTranscript {
  /**
   * Helper function that inserts text into a Google Document.
   *
-  * @param {Object} service Docs authorized service to be able to write to an existing Doc.
-  * @param {Object} toInsert List of requests to be inserted into the Doc.
-  * @param {String} docID Google Doc ID of the Doc you'll be writing to.
+  * @param {Docs} service Docs authorized service to be able to write to an existing Doc.
+  * @param {String} docId Google Doc ID of the Doc you'll be writing to.
+  * @param {List<Request>} requests List of requests to be inserted into the Doc.
   */
- private static void insertText(Docs service, String docId, List<Request> toInsert) throws IOException {
+ private static void insertText(Docs service, String docId, List<Request> requests) throws IOException {
    BatchUpdateDocumentRequest body = new BatchUpdateDocumentRequest();
-   service.documents().batchUpdate(docId, body.setRequests(toInsert)).execute();
+   service.documents().batchUpdate(docId, body.setRequests(requests)).execute();
  }
 }
 
