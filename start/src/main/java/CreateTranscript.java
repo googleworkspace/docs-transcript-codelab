@@ -112,7 +112,7 @@ public class CreateTranscript {
   /**
    * Obtains the transcript of an audio file by calling the Google Speech-to-Text API.
    *
-   * @return {List<Request>} A list of requests of the audio file's transcript.
+   * @return {List<Request>} A list of text to insert into a Google Doc.
    */
   private static List<Request> getTranscript() throws IOException {
     // TODO: Obtain and return an audio file's text transcripts.
