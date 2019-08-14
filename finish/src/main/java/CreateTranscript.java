@@ -37,10 +37,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Outputs the transcript of an audio file into a
- * newly created Google Document.
+ * Outputs the transcript of an audio file into a newly created Google Document.
  */
 public class CreateTranscript {
+
   private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
   // Specify audio file name below.
@@ -160,7 +160,8 @@ public class CreateTranscript {
    * @param {String} docId Google Doc ID of the Doc you'll be writing to.
    * @param {List<Request>} insertRequests List of insertRequests to be inserted into the Doc.
    */
-  private static void insertText(Docs service, String docId, List<Request> insertRequests) throws IOException {
+  private static void insertText(Docs service, String docId, List<Request> insertRequests)
+      throws IOException {
     BatchUpdateDocumentRequest body = new BatchUpdateDocumentRequest();
     service.documents().batchUpdate(docId, body.setRequests(insertRequests)).execute();
   }
