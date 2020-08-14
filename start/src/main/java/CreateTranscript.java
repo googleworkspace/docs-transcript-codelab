@@ -69,7 +69,7 @@ public class CreateTranscript {
   static Credential getCredentials(final NetHttpTransport httpTransport) throws IOException {
     InputStream in = CreateTranscript.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
     if (in == null) {
-      throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
+      throw new FileNotFoundException("Credentials file not found at: " + CREDENTIALS_FILE_PATH);
     }
 
     GoogleClientSecrets clientSecrets =
